@@ -29,6 +29,7 @@ public class TextTrialRepository implements IFTrialRepository{
                         evaluationsData.append(",");
                     }
 
+                    // FIXED: correct evaluation order = taste : texture : melting
                     evaluationsData.append(evaluation.getIdEvaluation())
                                     .append(":")
                                     .append(evaluation.getNameEvaluator())

@@ -1,8 +1,8 @@
 DAIRY|ING001|Skim Milk Powder|kg|120000.0|34.0|1.0
 DAIRY|ING002|Whole Milk Powder|kg|145000.0|26.0|26.0
 DAIRY|ING003|Whey Powder|kg|95000.0|12.0|1.5
-FAT|ING004|Coconut Oil|kg|80000.0|100.0|Coconut
-FAT|ING005|Butter Oil|kg|190000.0|99.8|Milk
+FAT|ING004|Coconut Oil|kg|80000.0|100.0|Coconut|
+FAT|ING005|Butter Oil|kg|190000.0|99.8|Milk|
 ADDITIVE|ING006|Sugar|kg|22000.0|Sweetener|15.0
 ADDITIVE|ING007|Stabilizer|kg|200000.0|Stabilizer|0.3
 ADDITIVE|ING008|Emulsifier|kg|180000.0|Emulsifier|0.2

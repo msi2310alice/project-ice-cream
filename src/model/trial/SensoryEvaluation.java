@@ -45,6 +45,7 @@ public class SensoryEvaluation {
         this.meltingScore = meltingScore;
     }
 
+    // FIXED: average must include meltingScore, not textureScore twice
     public double getAverageScore() {
         return (double)(tasteScore + textureScore + meltingScore)/3;
     }

@@ -21,7 +21,8 @@ public class Main {
                 new TextIngredientRepository("src/data/ingredients.txt");
 
         IFFormulaRepository formulaRepository =
-                new TextFormulaRepository("src/data/formulas.txt");
+                // FIXED: actual file name is formula.txt (singular), not formulas.txt
+                new TextFormulaRepository("src/data/formula.txt");
 
         IFTrialRepository trialRepository =
                 new TextTrialRepository("src/data/trials.txt");
