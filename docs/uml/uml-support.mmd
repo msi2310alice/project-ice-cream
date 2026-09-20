@@ -1,0 +1,131 @@
+classDiagram
+ direction TB
+
+ class AddIngredientMenu {
+  -Scanner scanner
+  -IngredientService ingredientService
+  +execute()
+ }
+ class AddFormulaMenu {
+  -Scanner scanner
+  -IngredientService ingredientService
+  -FormulaService formulaService
+  +execute()
+ }
+ class AddTrialMenu {
+  -Scanner scanner
+  -FormulaService formulaService
+  -TrialService trialService
+  +execute()
+ }
+ class AddSensoryEvaluationMenu {
+  -Scanner scanner
+  -TrialService trialService
+  -SensoryEvaluationService sensoryEvaluationService
+  +execute()
+ }
+ class SearchMenu {
+  -Scanner scanner
+  -IngredientService ingredientService
+  -FormulaService formulaService
+  -TrialService trialService
+  -SensoryEvaluationService sensoryEvaluationService
+  +execute()
+ }
+ class TrialReportMenu {
+  -TrialService trialService
+  +execute()
+ }
+ class SaveDataMenu {
+  -IngredientService ingredientService
+  -FormulaService formulaService
+  -TrialService trialService
+  +execute()
+ }
+
+ class IFSortingStrategy {
+  <<interface>>
+  +sort(List, Comparator, SortDirection)
+ }
+ class AbstractSorter {
+  <<abstract>>
+  #compare(Object, Object, Comparator, SortDirection) int
+ }
+ class BubbleSort {
+  +sort(List, Comparator, SortDirection)
+ }
+ class InsertionSort {
+  +sort(List, Comparator, SortDirection)
+ }
+ class SelectionSort {
+  +sort(List, Comparator, SortDirection)
+ }
+ class TrialBatchSizeComparator {
+  +compare(Trial, Trial) int
+ }
+ class TrialScoreComparator {
+  +compare(Trial, Trial) int
+ }
+ class SortDirection {
+  <<enumeration>>
+  ASCENDING
+  DESCENDING
+ }
+
+ class EvaluationTask {
+  -Trial trial
+  -SensoryEvaluation evaluation
+  -SensoryEvaluationService service
+  -EvaluationLog log
+  +run()
+ }
+ class EvaluationLog {
+  -StringBuffer log
+  +addLog(String)
+  +getLog() String
+ }
+ class Validator {
+  +validateIngredientId(String)
+  +validateFormulaId(String)
+  +validateTrialId(String)
+  +validateEvaluationId(String)
+  +validateName(String, String)
+  +validatePositive(double, String)
+  +validateSensoryScore(int, String)
+  +validateSearchKeyword(String)
+ }
+ class IngredientFactory {
+  +createIngredient(String[]) Ingredient
+ }
+ class ReportGenerator {
+  +generateTrialReport(List~Trial~) String
+ }
+ class SortBenchmark {
+  +messure(List, IFSortingStrategy, Comparator, SortDirection) long
+ }
+
+ class IceCreamException {
+  <<exception>>
+  +IceCreamException(String)
+ }
+ class FileDataException
+ class InvalidDataException
+ class InvalidSearchDataException
+ class DuplicateIdException
+
+ AbstractSorter ..|> IFSortingStrategy
+ BubbleSort --|> AbstractSorter
+ InsertionSort --|> AbstractSorter
+ SelectionSort --|> AbstractSorter
+ TrialBatchSizeComparator --> Trial
+ TrialScoreComparator --> Trial
+ EvaluationTask --> EvaluationLog
+ IngredientFactory --> Ingredient
+ ReportGenerator --> Trial
+ SortBenchmark --> IFSortingStrategy
+ SortBenchmark --> SortDirection
+ Validator ..> InvalidDataException
+ FileDataException --|> IceCreamException
+ InvalidDataException --|> IceCreamException
+ InvalidSearchDataException --|> InvalidDataException
+ DuplicateIdException --|> IceCreamException

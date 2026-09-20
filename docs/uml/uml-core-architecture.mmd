@@ -1,0 +1,108 @@
+classDiagram
+ direction TB
+
+ class Main {
+  +main(String[] args)
+ }
+
+ class MainMenu {
+  -Scanner scanner
+  -AddIngredientMenu addIngredientMenu
+  -AddFormulaMenu addFormulaMenu
+  -AddTrialMenu addTrialMenu
+  -AddSensoryEvaluationMenu addSensoryEvaluationMenu
+  -SearchMenu searchMenu
+  -TrialReportMenu trialReportMenu
+  -SaveDataMenu saveDataMenu
+  +start()
+ }
+
+ class IngredientService {
+  -List~Ingredient~ ingredients
+  -Map~String,Ingredient~ ingredientMap
+  -IFIngredientRepository repository
+  +addIngredient(Ingredient) boolean
+  +findIngredientById(String) Ingredient
+  +findIngredientsByName(String) List~Ingredient~
+  +removeIngredient(String) boolean
+  +saveData()
+  +loadData()
+ }
+
+ class FormulaService {
+  -List~Formula~ formulas
+  -Map~String,Formula~ formulaMap
+  -IFFormulaRepository repository
+  +addFormula(Formula) boolean
+  +findFormulaById(String) Formula
+  +findFormulasByName(String) List~Formula~
+  +removeFormula(String) boolean
+  +saveData()
+  +loadData(List~Ingredient~)
+ }
+
+ class TrialService {
+  -List~Trial~ trials
+  -Map~String,Trial~ trialMap
+  -Queue~Trial~ trialsWaiting
+  -Deque~Trial~ trialHistory
+  -IFTrialRepository repository
+  +addTrial(Trial) boolean
+  +findTrialById(String) Trial
+  +findTrialsByName(String) List~Trial~
+  +removeTrial(String) boolean
+  +sortTrials(...) List~Trial~
+  +saveData()
+  +loadData(List~Formula~)
+ }
+
+ class SensoryEvaluationService {
+  +addSensoryEvaluationToTrial(Trial, SensoryEvaluation)
+  +findSensoryEvaluationById(Trial, String) SensoryEvaluation
+  +findSensoryEvaluationsByName(Trial, String) List~SensoryEvaluation~
+  +calculateAverageScoreTrial(Trial) double
+ }
+
+ class IFIngredientRepository {
+  <<interface>>
+  +save(List~Ingredient~)
+  +load() List~Ingredient~
+ }
+ class IFFormulaRepository {
+  <<interface>>
+  +save(List~Formula~)
+  +load(List~Ingredient~) List~Formula~
+ }
+ class IFTrialRepository {
+  <<interface>>
+  +save(List~Trial~)
+  +load(List~Formula~) List~Trial~
+ }
+ class TextIngredientRepository {
+  -String filePath
+  +save(List~Ingredient~)
+  +load() List~Ingredient~
+ }
+ class TextFormulaRepository {
+  -String filePath
+  +save(List~Formula~)
+  +load(List~Ingredient~) List~Formula~
+ }
+ class TextTrialRepository {
+  -String filePath
+  +save(List~Trial~)
+  +load(List~Formula~) List~Trial~
+ }
+
+ Main --> MainMenu
+ Main --> IngredientService
+ Main --> FormulaService
+ Main --> TrialService
+ Main --> SensoryEvaluationService
+
+ IngredientService --> IFIngredientRepository
+ FormulaService --> IFFormulaRepository
+ TrialService --> IFTrialRepository
+ TextIngredientRepository ..|> IFIngredientRepository
+ TextFormulaRepository ..|> IFFormulaRepository
+ TextTrialRepository ..|> IFTrialRepository

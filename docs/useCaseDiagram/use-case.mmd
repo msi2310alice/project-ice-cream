@@ -1,0 +1,37 @@
+flowchart LR
+    user([User])
+
+    subgraph system[Ice Cream Trial Management System]
+        addIngredient([Add ingredient])
+        addFormula([Add formula])
+        addTrial([Add trial])
+        addEvaluation([Add sensory evaluation])
+        search([Search data])
+        report([Generate trial report])
+        save([Save data])
+        exit([Exit application])
+        load([Load data at startup])
+
+        searchId([Search by ID])
+        searchName([Search by name])
+        search --> searchId
+        search --> searchName
+        exit --> save
+    end
+
+    user --> addIngredient
+    user --> addFormula
+    user --> addTrial
+    user --> addEvaluation
+    user --> search
+    user --> report
+    user --> save
+    user --> exit
+
+    load -. system startup .-> addIngredient
+    load -. system startup .-> addFormula
+    load -. system startup .-> addTrial
+
+    addFormula -. uses existing .-> addIngredient
+    addTrial -. uses existing .-> addFormula
+    addEvaluation -. uses existing .-> addTrial

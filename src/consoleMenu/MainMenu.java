@@ -40,15 +40,18 @@ public class MainMenu {
             showMenu();
             System.out.print("Choose: ");
 
-            String input = scanner.nextLine().trim();
-
-            try {
-                choice = Integer.parseInt(input);
-            } catch (NumberFormatException e) {
+            while (!scanner.hasNextInt()) {
+                String invalidInput = scanner.nextLine();
                 System.out.println("Invalid choice. Please enter a number from 0 to 7.");
-                choice = -1;
-                continue;
+                System.out.print("Choose: ");
+
+                if (invalidInput.trim().isEmpty()) {
+                    continue;
+                }
             }
+
+            choice = scanner.nextInt();
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:

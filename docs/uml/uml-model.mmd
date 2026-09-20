@@ -1,0 +1,117 @@
+classDiagram
+ direction TB
+
+ class Ingredient {
+  <<abstract>>
+  -String id
+  -String name
+  -String unit
+  -double price
+  +getId() String
+  +getName() String
+  +getUnit() String
+  +getPrice() double
+  +setName(String)
+  +setUnit(String)
+  +setPrice(double)
+ }
+ class DairyIngredient {
+  -double proteinPercent
+  -double fatPercent
+  +getProteinPercent() double
+  +getFatPercent() double
+  +setProteinPercent(double)
+  +setFatPercent(double)
+ }
+ class FatIngredient {
+  -double fatPercent
+  -String fatSource
+  +getFatPercent() double
+  +getFatSource() String
+  +setFatPercent(double)
+  +setFatSource(String)
+ }
+ class AdditiveIngredient {
+  -String function
+  -double recommendedDosage
+  +getFunction() String
+  +getRecommendedDosage() double
+  +setFunction(String)
+  +setRecommendedDosage(double)
+ }
+
+ class Formula {
+  -String idFormula
+  -String nameFormula
+  -List~FormulaItem~ itemsFormula
+  +getIdFormula() String
+  +getNameFormula() String
+  +getItemsFormula() List~FormulaItem~
+  +setNameFormula(String)
+  +addItem(FormulaItem)
+  +removeItem(FormulaItem)
+  +getTotalAmount() double
+ }
+ class FormulaItem {
+  -Ingredient ingredient
+  -double amount
+  +getIngredient() Ingredient
+  +getAmount() double
+  +setIngredient(Ingredient)
+  +setAmount(double)
+ }
+ class Trial {
+  -String idTrial
+  -String nameTrial
+  -Formula formulaTrial
+  -double batchSizeTrial
+  -TrialStatus statusTrial
+  -List~SensoryEvaluation~ evaluationsTrial
+  +getIdTrial() String
+  +getNameTrial() String
+  +getFormula() Formula
+  +getBatchSizeTrial() double
+  +getStatusTrial() TrialStatus
+  +addEvaluation(SensoryEvaluation)
+  +getAverageScoreTrial() double
+  +compareTo(Trial) int
+ }
+ class SensoryEvaluation {
+  -String idEvaluation
+  -String nameEvaluator
+  -int tasteScore
+  -int textureScore
+  -int meltingScore
+  +getIdEvaluation() String
+  +getNameEvaluator() String
+  +getTasteScore() int
+  +getTextureScore() int
+  +getMeltingScore() int
+  +setNameEvaluator(String)
+  +setTasteScore(int)
+  +setTextureScore(int)
+  +setMeltingScore(int)
+  +getAverageScore() double
+ }
+ class IngredientType {
+  <<enumeration>>
+  DAIRY
+  FAT
+  ADDITIVE
+ }
+ class TrialStatus {
+  <<enumeration>>
+  PLANNED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+ }
+
+ Ingredient <|-- DairyIngredient
+ Ingredient <|-- FatIngredient
+ Ingredient <|-- AdditiveIngredient
+ Formula *-- FormulaItem
+ FormulaItem --> Ingredient
+ Trial --> Formula
+ Trial *-- SensoryEvaluation
+ Trial --> TrialStatus

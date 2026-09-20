@@ -65,7 +65,7 @@ public class FormulaService {
     }
     
     public boolean removeFormula(String id) {
-        Formula formula = formulaMap.get(id);
+        Formula formula = formulaMap.remove(id);
         if (formula == null) {
             return false;
         }

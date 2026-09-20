@@ -1,0 +1,47 @@
+sequenceDiagram
+    actor User
+    participant Main
+    participant MainMenu
+    participant IngredientService
+    participant FormulaService
+    participant TrialService
+    participant EvaluationService as SensoryEvaluationService
+    participant IngredientRepo as TextIngredientRepository
+    participant FormulaRepo as TextFormulaRepository
+    participant TrialRepo as TextTrialRepository
+
+    Main->>IngredientService: loadData()
+    IngredientService->>IngredientRepo: load()
+    IngredientRepo-->>IngredientService: ingredients
+
+    Main->>FormulaService: loadData(ingredients)
+    FormulaService->>FormulaRepo: load(ingredients)
+    FormulaRepo-->>FormulaService: formulas
+
+    Main->>TrialService: loadData(formulas)
+    TrialService->>TrialRepo: load(formulas)
+    TrialRepo-->>TrialService: trials
+
+    Main->>MainMenu: start()
+    User->>MainMenu: Select Add Trial
+    MainMenu->>FormulaService: findFormulaById(formulaId)
+    FormulaService-->>MainMenu: Formula
+    MainMenu->>TrialService: addTrial(trial)
+    TrialService-->>MainMenu: Trial added
+
+    User->>MainMenu: Select Add Sensory Evaluation
+    MainMenu->>TrialService: findTrialById(trialId)
+    TrialService-->>MainMenu: Trial
+    MainMenu->>EvaluationService: addSensoryEvaluationToTrial(trial, evaluation)
+    EvaluationService->>EvaluationService: validate ID, name, and scores
+    EvaluationService->>EvaluationService: trial.addEvaluation(evaluation)
+    EvaluationService-->>MainMenu: Evaluation added
+
+    User->>MainMenu: Select Save Data
+    MainMenu->>IngredientService: saveData()
+    IngredientService->>IngredientRepo: save(ingredients)
+    MainMenu->>FormulaService: saveData()
+    FormulaService->>FormulaRepo: save(formulas)
+    MainMenu->>TrialService: saveData()
+    TrialService->>TrialRepo: save(trials)
+    MainMenu-->>User: Data saved successfully
